@@ -37,6 +37,8 @@ import { useForm, Controller } from 'react-hook-form'
 // ** Icon Imports
 import Icon from '../../icon'
 
+import { useRouter, usePathname } from 'next/navigation'
+
 
 
 interface State {
@@ -123,6 +125,7 @@ const RegisterForm = () => {
 
   // ** Hooks
   //   const auth = useAuth()
+  const router = useRouter()
 
   const [values, setValues] = useState<State>({
     showPassword: false,
@@ -183,7 +186,12 @@ const RegisterForm = () => {
           redirect: false,
           // callbackUrl: '/pages/about' 
         });
-  
+
+        if(!resp?.error){
+          console.log(res?.status)
+          router.push('/dashboard')
+          router.refresh()
+        }
 
         // if (res?.response.data.email) {
         //       setIsError(true)
@@ -194,10 +202,10 @@ const RegisterForm = () => {
           setIsError(false)
         // return res.data.user;
       })
-      .catch((error) => {
-        console.log(error.response);
-        throw new Error(error.response.data.message);
-      })
+      // .catch((error) => {
+      //   console.log(error.response);
+      //   throw new Error(error.response.data.message);
+      // })
 
     // console.log(data)
 
