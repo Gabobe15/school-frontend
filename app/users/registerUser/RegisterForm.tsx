@@ -23,6 +23,8 @@ import Alert from '@mui/material/Alert';
 // ** Axios
 import axios from 'axios'
 
+import { signIn } from "next-auth/react";
+
 // ** Config
 import authConfig from '../../configs/auth'
 
@@ -172,8 +174,16 @@ const RegisterForm = () => {
 
     axios
       .post(authConfig.registerEndpoint, { first_name, last_name, email, mobile, password, role, location })
-      .then(res => {
+      .then(async res => {
         console.log(res.data.user)
+
+        const resp = await signIn("credentials", { 
+          email: email, 
+          password: password, 
+          redirect: false,
+          // callbackUrl: '/pages/about' 
+        });
+  
 
         // if (res?.response.data.email) {
         //       setIsError(true)
