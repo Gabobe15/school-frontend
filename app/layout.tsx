@@ -18,24 +18,19 @@ const Layout: React.FC<any> = ({ children }) => {
   
 
   return (
-    <Provider store={store}>
     <html>
       {/* <CacheProvider value={emotionCache}> */}
         <body>
-          {/* <AuthProvider>
-          <Guard authGuard={authGuard} guestGuard={guestGuard} > */}
+          <Provider store={store}>
             {/* <Sidebar/> */}
             <main>
               <Navbar/>
               {children}
             </main>
               <Footer/>
-          {/* </Guard>
-          </AuthProvider> */}
+          </Provider>
         </body>
-        {/* </CacheProvider> */}
       </html>
-      </Provider>
   );
 };
 
