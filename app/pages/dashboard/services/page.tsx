@@ -2,7 +2,7 @@ import React from 'react'
 
 function Services() {
   return (
-    <div>
+    <div style={{paddingTop: '50px'}}>
       <p>Services</p>
     </div>
   )

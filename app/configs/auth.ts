@@ -2,11 +2,12 @@
 import apiUrl from './url'
 
 export default {
-  meEndpoint: `${apiUrl.url}/users_app/user/`,
-  loginEndpoint: `${apiUrl.url}/users_app/login/`,
-  forgotPasswordEndpoint: `${apiUrl.url}/users_app/forgot-password/`,
-  resetPasswordEndpoint: `${apiUrl.url}/users_app/reset-password/`,
-  changePasswordEndpoint: `${apiUrl.url}/users_app/change-password/`,
-  registerEndpoint: `${apiUrl.url}/users_app/register/`,
+  meEndpoint: `${apiUrl.url}/users/users/`,
+  loginEndpoint: `${apiUrl.url}/users/login/`,
+  forgotPasswordEndpoint: `${apiUrl.url}/users/forgot-password/`,
+  resetPasswordEndpoint: `${apiUrl.url}/users/reset-password/`,
+  changePasswordEndpoint: `${apiUrl.url}/users/change-password/`,
+  registerEndpoint: `${apiUrl.url}/users/register/`,
+  registerStudent: `${apiUrl.url}/mkuapi/students/`,
   storageTokenKeyName: 'accessToken'
 }

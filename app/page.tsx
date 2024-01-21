@@ -15,24 +15,32 @@
 // async function Home() {
 //   // ** Hooks
 //   const router = useRouter()
-//   const authSession = await getServerAuthSession(); 
-  
+//   const authSession = await getServerAuthSession();
+
 //     if (authSession?.user) {
 //       // Redirect user to Home URL
 //       router.replace('/dashboard')
 //     }
-    
+
 //   return <CircularProgress />
 // }
 
 // export default Home
+'use client';
+import React from 'react';
+import { useSession } from 'next-auth/react';
+import scss from './Layout.module.scss';
+import LoginPage from './users/login/LoginForm';
+import Dashboard from './pages/dashboard/dashboard';
 
-import React from 'react'
-
-const Home = () => {
+const Home: React.FC = () => {
+  const { data: session } = useSession();
   return (
-    <div>page</div>
-  )
-}
+    <main className={scss.main}>
+      {session && <Dashboard />}
+      {!session && <LoginPage />}
+    </main>
+  );
+};
 
-export default Home
+export default Home;

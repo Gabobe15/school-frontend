@@ -1,18 +1,25 @@
 // ** Toolkit imports
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 
 // ** Reducers
-import users from './users'
+import users from './users';
+import students from './students';
+import inertstudents from './inertstudents';
+import inertuser from './inertuser';
+
 
 export const store = configureStore({
   reducer: {
     users,
+    students,
+    inertstudents,
+    inertuser,
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false
-    })
-})
+      serializableCheck: false,
+    }),
+});
 
-export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
