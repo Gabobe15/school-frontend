@@ -169,7 +169,7 @@ const RowOptions = (props: RowOptionsProps) => {
         PaperProps={{ style: { minWidth: '8rem' } }}
       >
         <MenuItem sx={{ p: 0 }} onClick={handleRowOptionsClose}>
-          <MenuItemLink href={`/pages/dashboard/users/edit/${id}`} passHref>
+          <MenuItemLink href={`/pages/dashboard/students/edit/${id}`} passHref>
             {/* <PencilOutline fontSize='small' sx={{ mr: 2 }} /> */}
             Edit
           </MenuItemLink>
