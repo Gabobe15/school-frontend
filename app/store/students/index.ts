@@ -67,12 +67,49 @@ export const deactivateStd = createAsyncThunk(
   }
 );
 
+// ** Update User
+export const updateStudent = createAsyncThunk(
+  'appStudent/updateStudent',
+  async (data: { [key: string]: number | string | any }) => {
+    const id = data.id;
+    const response = await axios.patch(`${apiUrl.url}/mkuapi/students/${id}/`, {
+      regno: data.regno,
+      fullname: data.fullname,
+      course: data.course,
+      email: data.email,
+      contact: data.contact,
+      // role: data.role,
+    });
+
+    return response.data;
+  }
+);
+
+// ** Get Single User
+export const getSingleStudent = createAsyncThunk(
+  'appStudent/getSingleStudent',
+  async (params: { [key: string]: number | string | any }) => {
+    const { id } = params ?? '';
+    const response = await axios.get(
+      `${apiUrl.url}/mkuapi/single-student/${id}/`
+    );
+
+    return [
+      // 200,
+      {
+        student: response.data,
+      },
+    ];
+  }
+);
+
 export const appStudentsSlice = createSlice({
   name: 'appStudents',
   initialState: {
     data: [],
     total: 1,
     status: '',
+    singleStudent: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -85,6 +122,20 @@ export const appStudentsSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(deactivateStd.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(getSingleStudent.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.singleStudent = action.payload[0].student;
+      })
+      .addCase(getSingleStudent.rejected, (state) => {
+        state.status = 'failed';
+        state.singleStudent = null;
+      })
+      .addCase(updateStudent.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(updateStudent.rejected, (state) => {
         state.status = 'failed';
       });
   },

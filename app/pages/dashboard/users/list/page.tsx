@@ -284,7 +284,7 @@ const UserList = () => {
     isLoading: false,
     total: 0,
     page: 1,
-    pageSize: 10,
+    pageSize: 100,
   });
 
   // ** Hooks
@@ -331,7 +331,7 @@ const UserList = () => {
     const is_active = false;
     const id = userId;
 
-    dispatch(deactivateUser({id}));
+    dispatch(deactivateUser({ id }));
   };
 
   // Close dialog
@@ -404,23 +404,37 @@ const UserList = () => {
         <Grid item xs={12}>
           <Card>
             {/* <TableHeader value={value} handleFilter={handleFilter} /> */}
-            <DataGrid
+            {/* <DataGrid
               autoHeight
-              pagination
-              paginationMode="server"
+              // pagination
+              // paginationMode="server"
               rows={store.data}
               columns={columns}
               // checkboxSelection
-              disableSelectionOnClick
-              pageSize={pageState.pageSize}
+              // disableSelectionOnClick
+              // pageSize={pageState.pageSize}
               rowsPerPageOptions={[5, 10, 30, 50]}
-              sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
-              // onSelectionModelChange={rows => setSelectedRows(rows)}
-              rowCount={pageState.total}
-              loading={pageState.isLoading}
-              page={pageState.page - 1}
+              // pageSizeOptions={[5, 10, 30, 50]}
+              // sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
+              // // onSelectionModelChange={rows => setSelectedRows(rows)}
+              // rowCount={pageState.total}
+              // loading={pageState.isLoading}
+              // page={pageState.page - 1}
               //   onPageChange={(newPage) => setPageState(old => ({ ...old, page: newPage + 1 }))}
               //   onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
+            /> */}
+            <DataGrid
+              rows={store.data}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 5,
+                  },
+                },
+              }}
+              pageSizeOptions={[5, 10, 50, 100]}
+              // onPageChange={onPageChange}
             />
           </Card>
         </Grid>

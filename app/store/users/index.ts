@@ -65,6 +65,42 @@ export const deactivateUser = createAsyncThunk(
     return response.data;
   }
 );
+// ** Update User
+export const updateUser = createAsyncThunk(
+  'appUsers/updateUser',
+  async (data: { [key: string]: number | string | any }) => {
+    const id = data.id;
+    const response = await axios.patch(
+      `${apiUrl.url}/users/update-user/${id}/`,
+      {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        mobile: data.mobile,
+        location: data.location,
+        role: data.role,
+      }
+    );
+
+    return response.data;
+  }
+);
+
+// ** Get Single User
+export const getSingleUser = createAsyncThunk(
+  'appUsers/getSingleUser',
+  async (params: { [key: string]: number | string | any }) => {
+    const { id } = params ?? '';
+    const response = await axios.get(`${apiUrl.url}/users/single-user/${id}/`);
+
+    return [
+      // 200,
+      {
+        user: response.data,
+      },
+    ];
+  }
+);
 
 export const appUsersSlice = createSlice({
   name: 'appUsers',
@@ -72,6 +108,7 @@ export const appUsersSlice = createSlice({
     data: [],
     total: 1,
     status: '',
+    singleUser: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -80,10 +117,24 @@ export const appUsersSlice = createSlice({
         state.data = action.payload[0].users;
         state.total = action.payload[0].total;
       })
+      .addCase(getSingleUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.singleUser = action.payload[0].user;
+      })
+      .addCase(getSingleUser.rejected, (state) => {
+        state.status = 'failed';
+        state.singleUser = null;
+      })
       .addCase(deactivateUser.fulfilled, (state) => {
         state.status = 'succeeded';
       })
       .addCase(deactivateUser.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(updateUser.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(updateUser.rejected, (state) => {
         state.status = 'failed';
       });
   },
