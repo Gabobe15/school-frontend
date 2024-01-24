@@ -40,8 +40,8 @@ export const fetchData = createAsyncThunk(
 );
 
 // ** Deactivate User
-export const deactivateUser = createAsyncThunk(
-  'appUsers/deactivateUser',
+export const deactivateReactivateUser = createAsyncThunk(
+  'appUsers/deactivateReactivateUser',
   async (
     data: { [key: string]: number | string | any },
     { dispatch }: Redux
@@ -50,7 +50,7 @@ export const deactivateUser = createAsyncThunk(
     const response = await axios.patch(
       `${apiUrl.url}/users/update-user/${id}/`,
       {
-        is_active: false,
+        is_active: data.is_active,
       }
     );
 
@@ -125,10 +125,10 @@ export const appUsersSlice = createSlice({
         state.status = 'failed';
         state.singleUser = null;
       })
-      .addCase(deactivateUser.fulfilled, (state) => {
+      .addCase(deactivateReactivateUser.fulfilled, (state) => {
         state.status = 'succeeded';
       })
-      .addCase(deactivateUser.rejected, (state) => {
+      .addCase(deactivateReactivateUser.rejected, (state) => {
         state.status = 'failed';
       })
       .addCase(updateUser.fulfilled, (state) => {

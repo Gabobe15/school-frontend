@@ -128,7 +128,7 @@ const MenuItemLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   textDecoration: 'none',
-  padding: theme.spacing(1.5, 4),
+  paddingLeft: 15,
   color: theme.palette.text.primary,
 }));
 
@@ -326,7 +326,7 @@ const StudentList = () => {
     const is_active = false;
     const id = userId;
 
-    dispatch(deactivateStd({id}));
+    dispatch(deactivateStd({ id }));
   };
 
   // Close dialog

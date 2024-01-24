@@ -49,7 +49,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { fetchData, reactivateUser } from '../../../../store/inertuser';
+import { fetchData } from '../../../../store/inertuser';
 
 import { Chip } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -173,13 +173,11 @@ const RowOptions = (props: RowOptionsProps) => {
             Edit
           </MenuItemLink>
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleClickOpen(), handleRowOptionsClose(), setUserId(id);
-          }}
-        >
-          {/* <DeleteOutline fontSize='small' sx={{ mr: 2 }} /> */}
-          Activate
+        <MenuItem sx={{ p: 0 }} onClick={handleRowOptionsClose}>
+          <MenuItemLink href={`/pages/dashboard/users/view/${id}`} passHref>
+            {/* <PencilOutline fontSize='small' sx={{ mr: 2 }} /> */}
+            View
+          </MenuItemLink>
         </MenuItem>
       </Menu>
     </>
@@ -266,7 +264,7 @@ const defaultColumns = [
     renderCell: ({ row }: CellType) => {
       const status = row.is_active ? 'active' : 'inactive';
 
-      return <Chip label="in active" variant="outlined" />;
+      return <Chip label="inactive" color="warning" />;
     },
   },
 ];
@@ -322,24 +320,6 @@ const UserList = () => {
     setOpen(true);
   };
 
-  const handleConfirmation = () => {
-    setUserInput('yes');
-    setSecondDialogOpen(true);
-    setOpen(false);
-
-    // const client = id
-    const is_active = true;
-    const id = userId;
-
-    dispatch(reactivateUser({ id }));
-  };
-
-  // Close dialog
-  const handleCancelDialog = () => {
-    setUserInput('no');
-    setSecondDialogOpen(true);
-    setOpen(false);
-  };
 
   const handleSecondDialogClose = () => {
     setSecondDialogOpen(false);
@@ -425,90 +405,6 @@ const UserList = () => {
           </Card>
         </Grid>
       </Grid>
-
-      {/* Deactivate Account Dialogs */}
-      <Dialog fullWidth maxWidth="xs" open={open} onClose={handleCancelDialog}>
-        <DialogContent>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Box
-              sx={{
-                maxWidth: '85%',
-                textAlign: 'center',
-                '& svg': { mb: 4, color: 'warning.main' },
-              }}
-            >
-              <Icon icon="mdi:alert-circle-outline" fontSize="5.5rem" />
-              <Typography>
-                Are you sure you would like to activate this user?
-              </Typography>
-            </Box>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button variant="contained" onClick={handleConfirmation}>
-            Yes
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={handleCancelDialog}
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        fullWidth
-        maxWidth="xs"
-        open={secondDialogOpen}
-        onClose={handleSecondDialogClose}
-      >
-        <DialogContent>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              '& svg': {
-                mb: 14,
-                color: userInput === 'yes' ? 'success.main' : 'error.main',
-              },
-            }}
-          >
-            <Icon
-              fontSize="5.5rem"
-              icon={
-                userInput === 'yes'
-                  ? 'mdi:check-circle-outline'
-                  : 'mdi:close-circle-outline'
-              }
-            />
-            <Typography variant="h4" sx={{ mb: 8 }}>
-              {userInput === 'yes' ? 'Activate!' : 'Cancelled!'}
-            </Typography>
-            <Typography>
-              {userInput === 'yes'
-                ? 'User has been activated.'
-                : 'User activation cancelled!'}
-            </Typography>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button
-            variant="contained"
-            color="success"
-            onClick={handleSecondDialogClose}
-          >
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 };
