@@ -132,7 +132,7 @@ const MenuItemLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
-const RowOptions = (props: RowOptionsProps) => {
+const RowOptions: any = (props: RowOptionsProps) => {
   // ** Props
   const { id, handleClickOpen, setUserId } = props;
 
@@ -310,32 +310,8 @@ const StudentList = () => {
     });
   };
 
-  // Open dialog
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleConfirmation = () => {
-    setUserInput('yes');
-    setSecondDialogOpen(true);
-    setOpen(false);
-
-    // const client = id
-    const id = userId;
-
-    dispatch(deactivateReactivateStd({ id }));
-  };
-
-  // Close dialog
-  const handleCancelDialog = () => {
-    setUserInput('no');
-    setSecondDialogOpen(true);
-    setOpen(false);
-  };
-
-  const handleSecondDialogClose = () => {
-    setSecondDialogOpen(false);
-  };
+  // const client = id
+  const id = userId;
 
   const columns = [
     ...defaultColumns,
@@ -347,11 +323,7 @@ const StudentList = () => {
       headerName: 'Actions',
       renderCell: ({ row }: CellType) => (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <RowOptions
-            id={row.id}
-            setUserId={setUserId}
-            handleClickOpen={handleClickOpen}
-          />
+          <RowOptions id={row.id} />
         </Box>
       ),
     },
@@ -402,105 +374,10 @@ const StudentList = () => {
               paginationMode="server"
               rows={store.data}
               columns={columns}
-              // checkboxSelection
-              //   disableSelectionOnClick
-              pageSize={pageState.pageSize}
-              rowsPerPageOptions={[5, 10, 30, 50]}
-              sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
-              // onSelectionModelChange={rows => setSelectedRows(rows)}
-              rowCount={pageState.total}
-              loading={pageState.isLoading}
-              page={pageState.page - 1}
-              //   onPageChange={(newPage) => setPageState(old => ({ ...old, page: newPage + 1 }))}
-              //   onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
             />
           </Card>
         </Grid>
       </Grid>
-
-      {/* Deactivate Account Dialogs */}
-      <Dialog fullWidth maxWidth="xs" open={open} onClose={handleCancelDialog}>
-        <DialogContent>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Box
-              sx={{
-                maxWidth: '85%',
-                textAlign: 'center',
-                '& svg': { mb: 4, color: 'warning.main' },
-              }}
-            >
-              <Icon icon="mdi:alert-circle-outline" fontSize="5.5rem" />
-              <Typography>
-                Are you sure you would like to delete this user?
-              </Typography>
-            </Box>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button variant="contained" onClick={handleConfirmation}>
-            Yes
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={handleCancelDialog}
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        fullWidth
-        maxWidth="xs"
-        open={secondDialogOpen}
-        onClose={handleSecondDialogClose}
-      >
-        <DialogContent>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              '& svg': {
-                mb: 14,
-                color: userInput === 'yes' ? 'success.main' : 'error.main',
-              },
-            }}
-          >
-            <Icon
-              fontSize="5.5rem"
-              icon={
-                userInput === 'yes'
-                  ? 'mdi:check-circle-outline'
-                  : 'mdi:close-circle-outline'
-              }
-            />
-            <Typography variant="h4" sx={{ mb: 8 }}>
-              {userInput === 'yes' ? 'Deleted!' : 'Cancelled!'}
-            </Typography>
-            <Typography>
-              {userInput === 'yes'
-                ? 'User has been deleted.'
-                : 'User deletion cancelled!'}
-            </Typography>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button
-            variant="contained"
-            color="success"
-            onClick={handleSecondDialogClose}
-          >
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 };

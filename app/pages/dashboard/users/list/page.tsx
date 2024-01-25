@@ -27,16 +27,12 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import CardContent from '@mui/material/CardContent';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import Button from '@mui/material/Button';
 
 // ** Icons Imports
 // import DotsVertical from 'mdi-material-ui/DotsVertical'
 // import PencilOutline from 'mdi-material-ui/PencilOutline'
 // import DeleteOutline from 'mdi-material-ui/DeleteOutline'
-import Icon from '../../../../icon';
+// import Icon from '../../../../icon';
 
 // ** Store Imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +45,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { fetchData, deactivateReactivateUser } from '../../../../store/users';
+import { fetchData } from '../../../../store/users';
 
 import { Chip } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -59,7 +55,7 @@ import { RootState, AppDispatch } from '../../../../store';
 // import { UsersType } from 'src/types/apps/userTypes'
 
 // ** Custom Components Imports
-// import TableHeader from 'src/views/apps/user/list/TableHeader'
+import TableHeader from '@/app/components/users/list/TableHeader';
 
 // import BlankLayout from 'src/@core/layouts/BlankLayout'
 
@@ -131,9 +127,9 @@ const MenuItemLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
-const RowOptions = (props: RowOptionsProps) => {
+const RowOptions: any = (props: RowOptionsProps) => {
   // ** Props
-  const { id, handleClickOpen, setUserId } = props;
+  const { id } = props;
 
   // ** State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -179,7 +175,6 @@ const RowOptions = (props: RowOptionsProps) => {
             View
           </MenuItemLink>
         </MenuItem>
-  
       </Menu>
     </>
   );
@@ -274,10 +269,6 @@ const UserList = () => {
   // ** State
   const [role, setRole] = useState<string>('');
   const [value, setValue] = useState<string>('');
-  const [userId, setUserId] = React.useState<number | string>('');
-  const [open, setOpen] = useState(false);
-  const [secondDialogOpen, setSecondDialogOpen] = useState<boolean>(false);
-  const [userInput, setUserInput] = useState<string>('');
 
   const [pageState, setPageState] = useState({
     isLoading: false,
@@ -296,6 +287,7 @@ const UserList = () => {
     setPageState((old) => ({ ...old, isLoading: true }));
     dispatch(
       fetchData({
+        role,
         q: value,
         page: pageState.page,
         pageSize: pageState.pageSize,
@@ -316,34 +308,6 @@ const UserList = () => {
     });
   };
 
-  // Open dialog
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleConfirmation = () => {
-    setUserInput('yes');
-    setSecondDialogOpen(true);
-    setOpen(false);
-
-    // const client = id
-    const is_active = false;
-    const id = userId;
-
-    dispatch(deactivateReactivateUser({ id }));
-  };
-
-  // Close dialog
-  const handleCancelDialog = () => {
-    setUserInput('no');
-    setSecondDialogOpen(true);
-    setOpen(false);
-  };
-
-  const handleSecondDialogClose = () => {
-    setSecondDialogOpen(false);
-  };
-
   const columns = [
     ...defaultColumns,
     {
@@ -354,11 +318,7 @@ const UserList = () => {
       headerName: 'Actions',
       renderCell: ({ row }: CellType) => (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <RowOptions
-            id={row.id}
-            setUserId={setUserId}
-            handleClickOpen={handleClickOpen}
-          />
+          <RowOptions id={row.id} />
         </Box>
       ),
     },
@@ -391,8 +351,12 @@ const UserList = () => {
                       inputProps={{ placeholder: 'Select Role' }}
                     >
                       <MenuItem value="">Select Role</MenuItem>
+                      <MenuItem value="director">Director</MenuItem>
+                      <MenuItem value="general-manager">
+                        General Manager
+                      </MenuItem>
                       <MenuItem value="manager">Manager</MenuItem>
-                      <MenuItem value="teller">Teller</MenuItem>
+                      <MenuItem value="teacher">Teacher</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -402,38 +366,12 @@ const UserList = () => {
         </Grid>
         <Grid item xs={12}>
           <Card>
-            {/* <TableHeader value={value} handleFilter={handleFilter} /> */}
-            {/* <DataGrid
-              autoHeight
-              // pagination
-              // paginationMode="server"
-              rows={store.data}
-              columns={columns}
-              // checkboxSelection
-              // disableSelectionOnClick
-              // pageSize={pageState.pageSize}
-              rowsPerPageOptions={[5, 10, 30, 50]}
-              // pageSizeOptions={[5, 10, 30, 50]}
-              // sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
-              // // onSelectionModelChange={rows => setSelectedRows(rows)}
-              // rowCount={pageState.total}
-              // loading={pageState.isLoading}
-              // page={pageState.page - 1}
-              //   onPageChange={(newPage) => setPageState(old => ({ ...old, page: newPage + 1 }))}
-              //   onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
-            /> */}
+            <TableHeader value={value} handleFilter={handleFilter} />
             <DataGrid
               rows={store.data}
               columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 5,
-                  },
-                },
-              }}
-              pageSizeOptions={[5, 10, 50, 100]}
-              // onPageChange={onPageChange}
+              initialState={{}}
+              pageSizeOptions={[10, 50, 100]}
             />
           </Card>
         </Grid>

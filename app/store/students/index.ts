@@ -61,14 +61,6 @@ export const deactivateReactivateStd = createAsyncThunk(
         id
       })
     )
-    // dispatch(
-    //   fetchData({
-    //     q: '',
-    //     page: 1,
-    //     pageSize: 10,
-    //   })
-    // );
-
     return response.data;
   }
 );
@@ -124,12 +116,6 @@ export const appStudentsSlice = createSlice({
         state.data = action.payload[0].students;
         state.total = action.payload[0].total;
       })
-      .addCase(deactivateReactivateStd.fulfilled, (state) => {
-        state.status = 'succeeded';
-      })
-      .addCase(deactivateReactivateStd.rejected, (state) => {
-        state.status = 'failed';
-      })
       .addCase(getSingleStudent.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.singleStudent = action.payload[0].student;
@@ -137,6 +123,12 @@ export const appStudentsSlice = createSlice({
       .addCase(getSingleStudent.rejected, (state) => {
         state.status = 'failed';
         state.singleStudent = null;
+      })
+      .addCase(deactivateReactivateStd.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(deactivateReactivateStd.rejected, (state) => {
+        state.status = 'failed';
       })
       .addCase(updateStudent.fulfilled, (state) => {
         state.status = 'succeeded';

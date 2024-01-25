@@ -12,20 +12,23 @@ interface DataParams {
   q: string;
   page: number;
   pageSize: number;
+  role: string;
 }
+
 interface Redux {
   getState: any;
   dispatch: Dispatch<any>;
 }
+
 // ** Fetch Users
 export const fetchData = createAsyncThunk(
   'appUsers/fetchData',
   async (params: DataParams) => {
-    const { q = '', page, pageSize } = params ?? '';
+    const { q = '', page, role = '', pageSize } = params ?? '';
     const queryLowered = q.toLowerCase();
 
     const response = await axios.get(
-      `${apiUrl.url}/users/users/?page=${page}&page_size=${pageSize}&search=${queryLowered}`
+      `${apiUrl.url}/users/users/?page=${page}&page_size=${pageSize}&role=${role}&search=${queryLowered}`
     );
 
     const data = response.data.results;
@@ -54,7 +57,6 @@ export const deactivateReactivateUser = createAsyncThunk(
       }
     );
 
-  
     dispatch(
       getSingleUser({
         id,

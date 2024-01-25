@@ -19,7 +19,7 @@ import { Chip } from '@mui/material';
 // import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // ** Types
-// import { UsersType } from '@/app/types/student';
+import { StudentType } from '@/app/types/student';
 
 // ** Utils Import
 // import { getInitials } from 'src/@core/utils/get-initials'
@@ -38,9 +38,8 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store';
 import Icon from '@/app/icon';
 
-
 interface Props {
-  data: StudentsType | null;
+  data: StudentType | null;
 }
 
 // interface ColorsType {
@@ -138,7 +137,7 @@ const StudentViewLeft = ({ data }: Props) => {
                 variant="h6"
                 sx={{ mb: 4, textTransform: 'capitalize' }}
               >
-                {data.first_name + ' ' + data.last_name}
+                {data.fullname}
               </Typography>
               {/* <CustomChip
                 skin='light'
@@ -224,25 +223,25 @@ const StudentViewLeft = ({ data }: Props) => {
                 </Box>
               </Box>
             </CardContent>
-              <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-                {data.is_active ? (
-                  <Button
-                    color="error"
-                    variant="outlined"
-                    onClick={handleClickOpen}
-                  >
-                    Deactivate
-                  </Button>
-                ) : (
-                  <Button
-                    color="error"
-                    variant="outlined"
-                    onClick={handleClickOpen}
-                  >
-                    Re-activate
-                  </Button>
-                )}
-              </CardActions>
+            <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+              {data.is_active ? (
+                <Button
+                  color="error"
+                  variant="outlined"
+                  onClick={handleClickOpen}
+                >
+                  Deactivate
+                </Button>
+              ) : (
+                <Button
+                  color="error"
+                  variant="outlined"
+                  onClick={handleClickOpen}
+                >
+                  Re-activate
+                </Button>
+              )}
+            </CardActions>
 
             {/* Deactivate Account Dialogs */}
             <Dialog

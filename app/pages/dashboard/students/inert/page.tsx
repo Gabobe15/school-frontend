@@ -27,16 +27,13 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import CardContent from '@mui/material/CardContent';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import Button from '@mui/material/Button';
 
 // ** Icons Imports
 // import DotsVertical from 'mdi-material-ui/DotsVertical'
 // import PencilOutline from 'mdi-material-ui/PencilOutline'
 // import DeleteOutline from 'mdi-material-ui/DeleteOutline'
-import Icon from '../../../../icon';
+
+// import Icon from '../../../../icon';
 
 // ** Store Imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +46,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { fetchData, deactivateReactivateStd } from '../../../../store/inertstudents';
+import { fetchData } from '../../../../store/inertstudents';
 
 // ** Types Imports
 import { RootState, AppDispatch } from '../../../../store';
@@ -132,7 +129,7 @@ const MenuItemLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
-const RowOptions = (props: RowOptionsProps) => {
+const RowOptions: any = (props: RowOptionsProps) => {
   // ** Props
   const { id, handleClickOpen, setUserId } = props;
 
@@ -259,7 +256,7 @@ const defaultColumns = [
     renderCell: ({ row }: CellType) => {
       const status = row.is_active ? 'active' : 'inactive';
 
-      return <Chip label="in active" color="warning" />;
+      return <Chip label="inactive" color="warning" />;
     },
   },
 ];
@@ -268,10 +265,7 @@ const StudentList = () => {
   // ** State
   const [role, setRole] = useState<string>('');
   const [value, setValue] = useState<string>('');
-  const [userId, setUserId] = React.useState<number | string>('');
-  const [open, setOpen] = useState(false);
-  const [secondDialogOpen, setSecondDialogOpen] = useState<boolean>(false);
-  const [userInput, setUserInput] = useState<string>('');
+ 
 
   const [pageState, setPageState] = useState({
     isLoading: false,
@@ -310,34 +304,6 @@ const StudentList = () => {
     });
   };
 
-  // Open dialog
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleConfirmation = () => {
-    setUserInput('yes');
-    setSecondDialogOpen(true);
-    setOpen(false);
-
-    // const client = id
-    const is_active = true;
-    const id = userId;
-
-    dispatch(deactivateReactivateStd({ id }));
-  };
-
-  // Close dialog
-  const handleCancelDialog = () => {
-    setUserInput('no');
-    setSecondDialogOpen(true);
-    setOpen(false);
-  };
-
-  const handleSecondDialogClose = () => {
-    setSecondDialogOpen(false);
-  };
-
   const columns = [
     ...defaultColumns,
     {
@@ -348,11 +314,7 @@ const StudentList = () => {
       headerName: 'Actions',
       renderCell: ({ row }: CellType) => (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <RowOptions
-            id={row.id}
-            setUserId={setUserId}
-            handleClickOpen={handleClickOpen}
-          />
+          <RowOptions id={row.id}  />
         </Box>
       ),
     },
@@ -403,105 +365,10 @@ const StudentList = () => {
               paginationMode="server"
               rows={store.data}
               columns={columns}
-              // checkboxSelection
-              //   disableSelectionOnClick
-              pageSize={pageState.pageSize}
-              rowsPerPageOptions={[5, 10, 30, 50]}
-              sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
-              // onSelectionModelChange={rows => setSelectedRows(rows)}
-              rowCount={pageState.total}
-              loading={pageState.isLoading}
-              page={pageState.page - 1}
-              //   onPageChange={(newPage) => setPageState(old => ({ ...old, page: newPage + 1 }))}
-              //   onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
             />
           </Card>
         </Grid>
       </Grid>
-
-      {/* Deactivate Account Dialogs */}
-      <Dialog fullWidth maxWidth="xs" open={open} onClose={handleCancelDialog}>
-        <DialogContent>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Box
-              sx={{
-                maxWidth: '85%',
-                textAlign: 'center',
-                '& svg': { mb: 4, color: 'warning.main' },
-              }}
-            >
-              <Icon icon="mdi:alert-circle-outline" fontSize="5.5rem" />
-              <Typography>
-                Are you sure you would like to activate this student?
-              </Typography>
-            </Box>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button variant="contained" onClick={handleConfirmation}>
-            Yes
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={handleCancelDialog}
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        fullWidth
-        maxWidth="xs"
-        open={secondDialogOpen}
-        onClose={handleSecondDialogClose}
-      >
-        <DialogContent>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              '& svg': {
-                mb: 14,
-                color: userInput === 'yes' ? 'success.main' : 'error.main',
-              },
-            }}
-          >
-            <Icon
-              fontSize="5.5rem"
-              icon={
-                userInput === 'yes'
-                  ? 'mdi:check-circle-outline'
-                  : 'mdi:close-circle-outline'
-              }
-            />
-            <Typography variant="h4" sx={{ mb: 8 }}>
-              {userInput === 'yes' ? 'Activated!' : 'Cancelled!'}
-            </Typography>
-            <Typography>
-              {userInput === 'yes'
-                ? 'Student has been deactivateReactivateStdd.'
-                : 'Student activation cancelled!'}
-            </Typography>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button
-            variant="contained"
-            color="success"
-            onClick={handleSecondDialogClose}
-          >
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 };
