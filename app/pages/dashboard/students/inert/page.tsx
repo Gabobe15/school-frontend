@@ -49,7 +49,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { fetchData, reactivate } from '../../../../store/inertstudents';
+import { fetchData, deactivateReactivateStd } from '../../../../store/inertstudents';
 
 // ** Types Imports
 import { RootState, AppDispatch } from '../../../../store';
@@ -169,18 +169,16 @@ const RowOptions = (props: RowOptionsProps) => {
         PaperProps={{ style: { minWidth: '8rem' } }}
       >
         <MenuItem sx={{ p: 0 }} onClick={handleRowOptionsClose}>
-          <MenuItemLink href={`/pages/dashboard/users/edit/${id}`} passHref>
+          <MenuItemLink href={`/pages/dashboard/students/edit/${id}`} passHref>
             {/* <PencilOutline fontSize='small' sx={{ mr: 2 }} /> */}
             Edit
           </MenuItemLink>
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleClickOpen(), handleRowOptionsClose(), setUserId(id);
-          }}
-        >
-          {/* <DeleteOutline fontSize='small' sx={{ mr: 2 }} /> */}
-          Activate
+        <MenuItem sx={{ p: 0 }} onClick={handleRowOptionsClose}>
+          <MenuItemLink href={`/pages/dashboard/students/view/${id}`} passHref>
+            {/* <PencilOutline fontSize='small' sx={{ mr: 2 }} /> */}
+            view
+          </MenuItemLink>
         </MenuItem>
       </Menu>
     </>
@@ -261,7 +259,7 @@ const defaultColumns = [
     renderCell: ({ row }: CellType) => {
       const status = row.is_active ? 'active' : 'inactive';
 
-      return <Chip label="in active" variant="outlined" />;
+      return <Chip label="in active" color="warning" />;
     },
   },
 ];
@@ -326,7 +324,7 @@ const StudentList = () => {
     const is_active = true;
     const id = userId;
 
-    dispatch(reactivate({ id }));
+    dispatch(deactivateReactivateStd({ id }));
   };
 
   // Close dialog
@@ -489,7 +487,7 @@ const StudentList = () => {
             </Typography>
             <Typography>
               {userInput === 'yes'
-                ? 'Student has been reactivated.'
+                ? 'Student has been deactivateReactivateStdd.'
                 : 'Student activation cancelled!'}
             </Typography>
           </Box>

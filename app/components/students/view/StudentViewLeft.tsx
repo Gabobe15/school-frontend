@@ -25,7 +25,7 @@ import { Chip } from '@mui/material';
 // import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { deactivateReactivateUser } from '@/app/store/students';
+import { deactivateReactivateStd } from '@/app/store/students';
 
 // ** Store Imports
 import { useDispatch } from 'react-redux';
@@ -38,10 +38,9 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store';
 import Icon from '@/app/icon';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
 
 interface Props {
-  data: UsersType | null;
+  data: StudentsType | null;
 }
 
 // interface ColorsType {
@@ -67,7 +66,7 @@ const StudentViewLeft = ({ data }: Props) => {
   const [open, setOpen] = useState(false);
   const [secondDialogOpen, setSecondDialogOpen] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<string>('');
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   // ** Hooks
   const dispatch = useDispatch<AppDispatch>();
@@ -87,7 +86,7 @@ const StudentViewLeft = ({ data }: Props) => {
 
     const is_active = data ? (data.is_active ? false : true) : '';
 
-    dispatch(deactivateReactivateUser({ id, is_active }));
+    dispatch(deactivateReactivateStd({ id, is_active }));
   };
 
   // Close dialog
@@ -225,9 +224,6 @@ const StudentViewLeft = ({ data }: Props) => {
                 </Box>
               </Box>
             </CardContent>
-            {session?.user?.id === id ? (
-              ''
-            ) : (
               <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
                 {data.is_active ? (
                   <Button
@@ -247,7 +243,6 @@ const StudentViewLeft = ({ data }: Props) => {
                   </Button>
                 )}
               </CardActions>
-            )}
 
             {/* Deactivate Account Dialogs */}
             <Dialog

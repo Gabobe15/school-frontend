@@ -49,7 +49,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { fetchData, deactivateStd } from '../../../../store/students';
+import { fetchData, deactivateReactivateStd } from '../../../../store/students';
 
 // ** Types Imports
 import { RootState, AppDispatch } from '../../../../store';
@@ -174,13 +174,11 @@ const RowOptions = (props: RowOptionsProps) => {
             Edit
           </MenuItemLink>
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleClickOpen(), handleRowOptionsClose(), setUserId(id);
-          }}
-        >
-          {/* <DeleteOutline fontSize='small' sx={{ mr: 2 }} /> */}
-          Delete
+        <MenuItem sx={{ p: 0 }} onClick={handleRowOptionsClose}>
+          <MenuItemLink href={`/pages/dashboard/students/view/${id}`} passHref>
+            {/* <PencilOutline fontSize='small' sx={{ mr: 2 }} /> */}
+            View
+          </MenuItemLink>
         </MenuItem>
       </Menu>
     </>
@@ -323,10 +321,9 @@ const StudentList = () => {
     setOpen(false);
 
     // const client = id
-    const is_active = false;
     const id = userId;
 
-    dispatch(deactivateStd({ id }));
+    dispatch(deactivateReactivateStd({ id }));
   };
 
   // Close dialog

@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 
 // ** Demo Components Imports
 import StudentViewLeft from './StudentViewLeft';
-import UserViewRight from './UserViewRight';
+import StudentViewRight from './StudentViewRight';
 
 // ** Types
 // import { UsersType } from 'src/types/apps/userTypes'
@@ -39,20 +39,21 @@ const StudentView = ({ id }: any) => {
     return (
       <Grid container spacing={6}>
         <Grid item xs={12} md={5} lg={4}>
-          <UserViewLeft data={data} />
+          <StudentViewLeft data={data} />
         </Grid>
         <Grid item xs={12} md={7} lg={8}>
-          <UserViewRight data={data} />
+          <StudentViewRight data={data} />
         </Grid>
       </Grid>
     );
   } else if (store.status === 'failed') {
     return (
-      <Grid container spacing={6}>
+      <Grid container spacing={6} sx={{ paddingTop: '300px' }}>
         <Grid item xs={12}>
           <Alert severity="error">
-            User with the id: {id} does not exist. Please check the list of
-            users: <Link href="/pages/dashboard/users/list">User List</Link>
+            Student with the id: {id} does not exist. Please check the list of
+            students:{' '}
+            <Link href="/pages/dashboard/students/list">Students List</Link>
           </Alert>
         </Grid>
       </Grid>

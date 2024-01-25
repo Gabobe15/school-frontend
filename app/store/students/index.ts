@@ -44,24 +44,30 @@ export const fetchData = createAsyncThunk(
 );
 
 // ** Deactivate User
-export const deactivateStd = createAsyncThunk(
-  'appStudents/deactivateStd',
+export const deactivateReactivateStd = createAsyncThunk(
+  'appStudents/deactivateReactivateStd',
   async (
     data: { [key: string]: number | string | any },
     { dispatch }: Redux
   ) => {
     const id = data.id;
     const response = await axios.patch(`${apiUrl.url}/mkuapi/students/${id}/`, {
-      is_active: false,
+      is_active: data.is_active,
     });
 
+
     dispatch(
-      fetchData({
-        q: '',
-        page: 1,
-        pageSize: 10,
+      getSingleStudent({
+        id
       })
-    );
+    )
+    // dispatch(
+    //   fetchData({
+    //     q: '',
+    //     page: 1,
+    //     pageSize: 10,
+    //   })
+    // );
 
     return response.data;
   }
@@ -118,10 +124,10 @@ export const appStudentsSlice = createSlice({
         state.data = action.payload[0].students;
         state.total = action.payload[0].total;
       })
-      .addCase(deactivateStd.fulfilled, (state) => {
+      .addCase(deactivateReactivateStd.fulfilled, (state) => {
         state.status = 'succeeded';
       })
-      .addCase(deactivateStd.rejected, (state) => {
+      .addCase(deactivateReactivateStd.rejected, (state) => {
         state.status = 'failed';
       })
       .addCase(getSingleStudent.fulfilled, (state, action) => {

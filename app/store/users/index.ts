@@ -54,11 +54,10 @@ export const deactivateReactivateUser = createAsyncThunk(
       }
     );
 
+  
     dispatch(
-      fetchData({
-        q: '',
-        page: 1,
-        pageSize: 10,
+      getSingleUser({
+        id,
       })
     );
 

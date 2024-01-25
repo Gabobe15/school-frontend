@@ -25,7 +25,7 @@ import { UsersType } from '@/app/types/user';
 // import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { deactivateReactivateUser } from '@/app/store/students';
+import { deactivateReactivateStd } from '@/app/store/students';
 
 // ** Store Imports
 import { useDispatch } from 'react-redux';
@@ -87,7 +87,7 @@ const StudentViewRight = ({ data }: Props) => {
 
     const is_active = data ? (data.is_active ? false : true) : '';
 
-    dispatch(deactivateReactivateUser({ id, is_active }));
+    dispatch(deactivateReactivateStd({ id, is_active }));
   };
 
   // Close dialog
