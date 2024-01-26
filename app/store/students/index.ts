@@ -13,6 +13,7 @@ interface DataParams {
   q: string;
   page: number;
   pageSize: number;
+  role: string;
 }
 
 interface Redux {
@@ -24,11 +25,11 @@ interface Redux {
 export const fetchData = createAsyncThunk(
   'appStudents/fetchData',
   async (params: DataParams) => {
-    const { q = '', page, pageSize } = params ?? '';
+    const { q = '', page, role = '', pageSize } = params ?? '';
     const queryLowered = q.toLowerCase();
 
     const response = await axios.get(
-      `${apiUrl.url}/mkuapi/students/?page=${page}&page_size=${pageSize}&search=${queryLowered}`
+      `${apiUrl.url}/mkuapi/students/?page=${page}&page_size=${pageSize}&role=${role}&search=${queryLowered}`
     );
 
     const data = response.data.results;
@@ -43,7 +44,7 @@ export const fetchData = createAsyncThunk(
   }
 );
 
-// ** Deactivate User
+// ** Deactivate student
 export const deactivateReactivateStd = createAsyncThunk(
   'appStudents/deactivateReactivateStd',
   async (
@@ -51,16 +52,18 @@ export const deactivateReactivateStd = createAsyncThunk(
     { dispatch }: Redux
   ) => {
     const id = data.id;
-    const response = await axios.patch(`${apiUrl.url}/mkuapi/students/${id}/`, {
-      is_active: data.is_active,
-    });
-
+    const response = await axios.patch(
+      `${apiUrl.url}/mkuapi/update-student/${id}/`,
+      {
+        is_active: data.is_active,
+      }
+    );
 
     dispatch(
       getSingleStudent({
-        id
+        id,
       })
-    )
+    );
     return response.data;
   }
 );
@@ -70,14 +73,17 @@ export const updateStudent = createAsyncThunk(
   'appStudent/updateStudent',
   async (data: { [key: string]: number | string | any }) => {
     const id = data.id;
-    const response = await axios.patch(`${apiUrl.url}/mkuapi/students/${id}/`, {
-      regno: data.regno,
-      fullname: data.fullname,
-      course: data.course,
-      email: data.email,
-      contact: data.contact,
-      // role: data.role,
-    });
+    const response = await axios.patch(
+      `${apiUrl.url}/mkuapi/update-student/${id}/`,
+      {
+        regno: data.regno,
+        fullname: data.fullname,
+        course: data.course,
+        email: data.email,
+        contact: data.contact,
+        // role: data.role,
+      }
+    );
 
     return response.data;
   }

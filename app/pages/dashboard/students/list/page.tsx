@@ -49,12 +49,13 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { fetchData, deactivateReactivateStd } from '../../../../store/students';
+import { fetchData } from '../../../../store/students';
 
 // ** Types Imports
 import { RootState, AppDispatch } from '../../../../store';
 import Chip from '@mui/material/Chip';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import TableHeader from '@/app/components/students/list/TableHeader';
 
 // import { ThemeColor } from 'src/@core/layouts/types'
 // import { UsersType } from 'src/types/apps/userTypes'
@@ -269,9 +270,6 @@ const StudentList = () => {
   const [role, setRole] = useState<string>('');
   const [value, setValue] = useState<string>('');
   const [userId, setUserId] = React.useState<number | string>('');
-  const [open, setOpen] = useState(false);
-  const [secondDialogOpen, setSecondDialogOpen] = useState<boolean>(false);
-  const [userInput, setUserInput] = useState<string>('');
 
   const [pageState, setPageState] = useState({
     isLoading: false,
@@ -290,6 +288,7 @@ const StudentList = () => {
     setPageState((old) => ({ ...old, isLoading: true }));
     dispatch(
       fetchData({
+        role,
         q: value,
         page: pageState.page,
         pageSize: pageState.pageSize,
@@ -356,8 +355,8 @@ const StudentList = () => {
                       inputProps={{ placeholder: 'Select Role' }}
                     >
                       <MenuItem value="">Computer</MenuItem>
-                      <MenuItem value="manager">IGSCE</MenuItem>
-                      <MenuItem value="teller">MADRASA</MenuItem>
+                      <MenuItem value="manager">IT</MenuItem>
+                      <MenuItem value="teller">Business</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -367,11 +366,10 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={12}>
           <Card>
-            {/* <TableHeader value={value} handleFilter={handleFilter} /> */}
+            <TableHeader value={value} handleFilter={handleFilter} />
             <DataGrid
               autoHeight
               pagination
-              paginationMode="server"
               rows={store.data}
               columns={columns}
             />
