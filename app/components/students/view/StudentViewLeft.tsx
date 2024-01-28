@@ -12,7 +12,7 @@ import CardActions from '@mui/material/CardActions';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { Chip } from '@mui/material';
+import { Avatar, Chip } from '@mui/material';
 
 // ** Custom Components
 // import CustomChip from 'src/@core/components/mui/chip'
@@ -133,30 +133,44 @@ const StudentViewLeft = ({ data }: Props) => {
               }}
             >
               {/* {renderUserAvatar()} */}
-              <Typography
+              <Avatar
+                // alt="Remy Sharp"
+                src="images/profile.jpg"
+                sx={{ width: 100, height: 100 }}
+              />
+              {/* <Typography
                 variant="h6"
                 sx={{ mb: 4, textTransform: 'capitalize' }}
               >
-                {data.fullname}
-              </Typography>
-              {/* <CustomChip
-                skin='light'
-                size='small'
-                label={data.role}
-                color={roleColors[data.role]}
-                sx={{
-                  borderRadius: '4px',
-                  fontSize: '0.875rem',
-                  textTransform: 'capitalize',
-                  '& .MuiChip-label': { mt: -0.25 }
-                }}
-              /> */}
+                profile picture
+              </Typography> */}
             </CardContent>
-
             <CardContent>
               <Typography variant="h6">Details</Typography>
               <Divider sx={{ mt: 4 }} />
               <Box sx={{ pt: 2, pb: 1 }}>
+                <Box sx={{ display: 'flex', mb: 2.7 }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ mr: 2, color: 'text.primary' }}
+                  >
+                    Reg no:
+                  </Typography>
+                  <Typography variant="body2">{data.regno}</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', mb: 2.7 }}>
+                  <Typography
+                    sx={{ mr: 2, fontWeight: 500, fontSize: '0.875rem' }}
+                  >
+                    Names:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ textTransform: 'capitalize' }}
+                  >
+                    {data.fullname}
+                  </Typography>
+                </Box>
                 <Box sx={{ display: 'flex', mb: 2.7 }}>
                   <Typography
                     variant="subtitle2"
@@ -168,59 +182,44 @@ const StudentViewLeft = ({ data }: Props) => {
                 </Box>
                 <Box sx={{ display: 'flex', mb: 2.7 }}>
                   <Typography
-                    variant="subtitle2"
-                    sx={{ mr: 2, color: 'text.primary' }}
+                    sx={{ mr: 2, fontWeight: 500, fontSize: '0.875rem' }}
                   >
-                    Status:
+                    Course:
                   </Typography>
-                  {data.is_active ? (
-                    <Chip label="active" color="success" />
-                  ) : (
-                    <Chip label="inactive" color="warning" />
-                  )}
-                  {/* <CustomChip
-                    skin='light'
-                    size='small'
-                    label={data.is_active ? 'true' : 'false'}
-                    color={statusColors[status]}
-                    sx={{
-                      height: 20,
-                      fontSize: '0.75rem',
-                      fontWeight: 500,
-                      borderRadius: '5px',
-                      textTransform: 'capitalize'
-                    }}
-                  /> */}
+                  <Typography variant="body2">{data.course}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', mb: 2.7 }}>
                   <Typography
                     sx={{ mr: 2, fontWeight: 500, fontSize: '0.875rem' }}
                   >
-                    Role:
+                    School of:
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ textTransform: 'capitalize' }}
-                  >
-                    {data.role}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', mb: 2.7 }}>
-                  <Typography
-                    sx={{ mr: 2, fontWeight: 500, fontSize: '0.875rem' }}
-                  >
-                    Contact:
-                  </Typography>
-                  <Typography variant="body2">{data.mobile}</Typography>
+                  <Typography variant="body2">{data.role}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex' }}>
                   <Typography
                     sx={{ mr: 2, fontWeight: 500, fontSize: '0.875rem' }}
                   >
-                    Location:
+                    Tel:
                   </Typography>
-                  <Typography variant="body2">{data.location}</Typography>
+                  <Typography variant="body2">{data.contact}</Typography>
                 </Box>
+              </Box>
+              <br />
+              <Divider />
+              <br />
+              <Box sx={{ display: 'flex', mb: 2.7 }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ mr: 2, color: 'text.primary' }}
+                >
+                  Status:
+                </Typography>
+                {data.is_active ? (
+                  <Chip label="active" color="success" />
+                ) : (
+                  <Chip label="inactive" color="warning" />
+                )}
               </Box>
             </CardContent>
             <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -241,6 +240,10 @@ const StudentViewLeft = ({ data }: Props) => {
                   Re-activate
                 </Button>
               )}
+              <br />
+              <br />
+              <br />
+              <br />
             </CardActions>
 
             {/* Deactivate Account Dialogs */}

@@ -139,7 +139,7 @@ const StudentViewRight = ({ data }: Props) => {
                 variant="h6"
                 sx={{ mb: 4, textTransform: 'capitalize' }}
               >
-                {data.first_name + ' ' + data.last_name}
+                {data.fullname}
               </Typography>
               {/* <CustomChip
                 skin='light'

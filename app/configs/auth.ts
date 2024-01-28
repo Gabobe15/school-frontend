@@ -8,6 +8,6 @@ export default {
   resetPasswordEndpoint: `${apiUrl.url}/users/reset-password/`,
   changePasswordEndpoint: `${apiUrl.url}/users/change-password/`,
   registerEndpoint: `${apiUrl.url}/users/register/`,
-  registerStudent: `${apiUrl.url}/mkuapi/students/`,
+  registerStudent: `${apiUrl.url}/mkuapi/register/`,
   storageTokenKeyName: 'accessToken'
 }

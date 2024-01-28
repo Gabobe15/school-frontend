@@ -81,7 +81,7 @@ export const updateStudent = createAsyncThunk(
         course: data.course,
         email: data.email,
         contact: data.contact,
-        // role: data.role,
+        role: data.role,
       }
     );
 

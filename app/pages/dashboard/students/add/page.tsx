@@ -52,6 +52,7 @@ interface UserData {
   course: string;
   email: string;
   contact: string;
+  role: string;
 }
 
 const showErrors = (field: string, valueLen: number, min: number) => {
@@ -75,6 +76,10 @@ const schema = yup.object().shape({
     .string()
     .min(3, (obj) => showErrors('Fullname', obj.value.length, obj.min))
     .required(),
+  role: yup
+    .string()
+    .min(3, (obj) => showErrors('Role', obj.value.length, obj.min))
+    .required(),
 });
 
 const defaultValues = {
@@ -83,6 +88,7 @@ const defaultValues = {
   course: '',
   email: '',
   contact: '',
+  role: '',
 };
 
 const StyledCardHeader = styled(CardHeader)<CardHeaderProps>(({ theme }) => ({
@@ -112,7 +118,7 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (data: UserData) => {
-    const { regno, fullname, course, email, contact } = data;
+    const { regno, fullname, course, email, contact, role } = data;
 
     // auth.register({ first_name, last_name, email, mobile, password, role }, (res) => {
     //   if (res.data?.user) {
@@ -135,6 +141,7 @@ const RegisterForm = () => {
         course,
         email,
         contact,
+        role,
       })
       .then(async (res) => {
         console.log(res.data.user);
@@ -312,6 +319,41 @@ const RegisterForm = () => {
                   {errors.contact && (
                     <FormHelperText sx={{ color: 'error.main' }}>
                       {errors.contact.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth>
+                  <InputLabel error={Boolean(errors.role)} id="role-select">
+                    Category
+                  </InputLabel>
+                  <Controller
+                    name="role"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { value, onChange } }) => (
+                      <Select
+                        fullWidth
+                        value={value}
+                        id="select-role"
+                        label="Field"
+                        labelId="role-select"
+                        onChange={onChange}
+                        error={Boolean(errors.role)}
+                        inputProps={{ placeholder: 'Select Role' }}
+                      >
+                        <MenuItem value="">Field</MenuItem>
+                        <MenuItem value="it">IT</MenuItem>
+                        <MenuItem value="business">Business</MenuItem>
+                        <MenuItem value="health">Health</MenuItem>
+                        <MenuItem value="engineering">Engineering</MenuItem>
+                      </Select>
+                    )}
+                  />
+                  {errors.role && (
+                    <FormHelperText sx={{ color: 'error.main' }}>
+                      {errors.role.message}
                     </FormHelperText>
                   )}
                 </FormControl>

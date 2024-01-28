@@ -239,19 +239,37 @@ const defaultColumns = [
       );
     },
   },
-  {
-    flex: 0.2,
-    minWidth: 250,
-    field: 'contact',
-    headerName: 'Contact',
-    renderCell: ({ row }: CellType) => {
-      return (
-        <Typography noWrap variant="body2">
-          {row.contact}
-        </Typography>
-      );
-    },
-  },
+  // {
+  //   flex: 0.2,
+  //   minWidth: 250,
+  //   field: 'contact',
+  //   headerName: 'Contact',
+  //   renderCell: ({ row }: CellType) => {
+  //     return (
+  //       <Typography noWrap variant="body2">
+  //         {row.contact}
+  //       </Typography>
+  //     );
+  //   },
+  // },
+  // {
+  //   flex: 0.15,
+  //   field: 'role',
+  //   minWidth: 150,
+  //   headerName: 'Role',
+  //   renderCell: ({ row }: CellType) => {
+  //     return (
+  //       <Box sx={{ display: 'flex', alignItems: 'center' }}>
+  //         <Typography
+  //           noWrap
+  //           sx={{ color: 'text.secondary', textTransform: 'capitalize' }}
+  //         >
+  //           {row.role}
+  //         </Typography>
+  //       </Box>
+  //     );
+  //   },
+  // },
   {
     flex: 0.1,
     minWidth: 110,
@@ -354,9 +372,10 @@ const StudentList = () => {
                       onChange={handleRoleChange}
                       inputProps={{ placeholder: 'Select Role' }}
                     >
-                      <MenuItem value="">Computer</MenuItem>
-                      <MenuItem value="manager">IT</MenuItem>
-                      <MenuItem value="teller">Business</MenuItem>
+                      <MenuItem value="">IT</MenuItem>
+                      <MenuItem value="business">Business</MenuItem>
+                      <MenuItem value="health">Health</MenuItem>
+                      <MenuItem value="engineering">Engineering</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
