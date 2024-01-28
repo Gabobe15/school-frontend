@@ -14,6 +14,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { Avatar, Chip } from '@mui/material';
 
+import profile from '../../../../public/images/profile.jpg';
+
 // ** Custom Components
 // import CustomChip from 'src/@core/components/mui/chip'
 // import CustomAvatar from 'src/@core/components/mui/avatar'
@@ -37,6 +39,7 @@ import { useDispatch } from 'react-redux';
 // ** Context
 import { AppDispatch } from '@/app/store';
 import Icon from '@/app/icon';
+import Image from 'next/image';
 
 interface Props {
   data: StudentType | null;
@@ -132,12 +135,19 @@ const StudentViewLeft = ({ data }: Props) => {
                 flexDirection: 'column',
               }}
             >
-              {/* {renderUserAvatar()} */}
-              <Avatar
-                // alt="Remy Sharp"
-                src="images/profile.jpg"
-                sx={{ width: 100, height: 100 }}
+              <Image
+                src={profile}
+                alt="profile picture"
+                height={200}
+                width={200}
+                style={{ borderRadius: '50%' }}
               />
+              {/* {renderUserAvatar()} */}
+              {/* <Avatar
+                src={profile}
+                alt="Profile picture"
+                sx={{ width: 100, height: 100 }}
+              /> */}
               {/* <Typography
                 variant="h6"
                 sx={{ mb: 4, textTransform: 'capitalize' }}
