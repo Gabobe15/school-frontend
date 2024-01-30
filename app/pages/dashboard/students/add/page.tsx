@@ -121,7 +121,7 @@ const RegisterForm = () => {
     const { regno, fullname, course, email, contact, role } = data;
 
     // auth.register({ first_name, last_name, email, mobile, password, role }, (res) => {
-    //   if (res.data?.user) {
+    //   if (res.data?.user) {zz
     //     setMessage("User created successfully.")
     //     setIsError(false)
     //     reset()

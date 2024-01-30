@@ -323,9 +323,7 @@ const EditStudentForm = ({ id }: any) => {
                       inputProps={{ placeholder: 'Select Role' }}
                     >
                       <MenuItem value="">Choose your field</MenuItem>
-                      <MenuItem value="Information-Technology">
-                        Information Technology
-                      </MenuItem>
+                      <MenuItem value="Computing"> Computing</MenuItem>
                       <MenuItem value="Business">Business</MenuItem>
                       <MenuItem value="Health">Health</MenuItem>
                       <MenuItem value="Engineering">Engineering</MenuItem>

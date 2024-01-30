@@ -44,6 +44,24 @@ export const fetchData = createAsyncThunk(
   }
 );
 
+// ** Get Single Student by regno
+export const getSingleStudentByRegNo = createAsyncThunk(
+  'appStudents/getSingleStudentByRegNo',
+  async (params: { [key: string]: number | string | any }) => {
+    const regno = parseInt(params.regno);
+    const response = await axios.get(
+      `${apiUrl.url}/mkuapi/single-student-by-regno/${regno}/`
+    );
+
+    return [
+      // 200,
+      {
+        student: response.data,
+      },
+    ];
+  }
+);
+
 // ** Deactivate student
 export const deactivateReactivateStd = createAsyncThunk(
   'appStudents/deactivateReactivateStd',
@@ -127,6 +145,14 @@ export const appStudentsSlice = createSlice({
         state.singleStudent = action.payload[0].student;
       })
       .addCase(getSingleStudent.rejected, (state) => {
+        state.status = 'failed';
+        state.singleStudent = null;
+      })
+      .addCase(getSingleStudentByRegNo.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.singleStudent = action.payload[0].student;
+      })
+      .addCase(getSingleStudentByRegNo.rejected, (state) => {
         state.status = 'failed';
         state.singleStudent = null;
       })

@@ -138,8 +138,8 @@ const StudentViewLeft = ({ data }: Props) => {
               <Image
                 src={profile}
                 alt="profile picture"
-                height={200}
-                width={200}
+                height={150}
+                width={150}
                 style={{ borderRadius: '50%' }}
               />
               {/* {renderUserAvatar()} */}
@@ -166,7 +166,7 @@ const StudentViewLeft = ({ data }: Props) => {
                   >
                     Reg no:
                   </Typography>
-                  <Typography variant="body2">{data.regno}</Typography>
+                  <Typography variant="body2">{data.id}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', mb: 2.7 }}>
                   <Typography
