@@ -29,8 +29,7 @@ import FormLabel from '@mui/material/FormLabel';
 // ** Store & Actions Imports
 import { AppDispatch } from '@/app/store';
 import { useDispatch } from 'react-redux';
-import { getSingleStudentByRegNo } from '@/app/store/students';
-
+import { postFee } from '@/app/store/fees';
 // ** Axios
 import axios from 'axios';
 
@@ -45,6 +44,7 @@ import { useForm, Controller } from 'react-hook-form';
 // import Icon from '../../../../icon'
 
 import { useRouter, usePathname } from 'next/navigation';
+
 import Icon from '@/app/icon';
 
 interface StudentData {
@@ -67,7 +67,7 @@ const StyledCardHeader = styled(CardHeader)<CardHeaderProps>(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
 }));
 
-const AddFee = ({ data }) => {
+const AddFee = ({ student }) => {
   // ** State
   const [open, setOpen] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -88,13 +88,13 @@ const AddFee = ({ data }) => {
   });
 
   const onSubmit = async (data: StudentData) => {
-    dispatch(getSingleStudentByRegNo(data))
+    dispatch(postFee({ ...data, student }))
       .unwrap()
       .then(() => {
-        // setMessage("Student found!")
+        setMessage('Fee added!');
       })
       .catch(() => {
-        setMessage('Student not found!');
+        setMessage('Fee not added!');
         setOpen(true);
       });
 
@@ -113,6 +113,25 @@ const AddFee = ({ data }) => {
           }}
         />
         <CardContent>
+          <Collapse in={open} sx={{ maxWidth: '600px', margin: 'auto', mb: 6 }}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color={isError ? 'error' : 'success'}
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <Icon icon="mdi:close" />
+                </IconButton>
+              }
+              severity={isError ? 'error' : 'success'}
+            >
+              {message}
+            </Alert>
+          </Collapse>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={6}>
               <Grid item xs={10}>
@@ -141,7 +160,7 @@ const AddFee = ({ data }) => {
               </Grid>
               <Grid item xs={2} sx={{ textAlign: 'right' }}>
                 <Button variant="contained" type="submit" sx={{ mr: 3 }}>
-                  Submit
+                  Pay
                 </Button>
               </Grid>
             </Grid>

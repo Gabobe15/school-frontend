@@ -6,14 +6,14 @@ import users from './users';
 import students from './students';
 import inertstudents from './inertstudents';
 import inertuser from './inertuser';
-import feepayment from './fees';
+import fees from './fees';
 
 export const store = configureStore({
   reducer: {
     users,
     students,
+    fees,
     inertstudents,
-    feepayment,
     inertuser,
   },
   middleware: (getDefaultMiddleware) =>

@@ -102,13 +102,13 @@ const AvatarWithoutImageLink = styled(Link)(({ theme }) => ({
 const renderClient = (row: any) => {
   if (row.photo) {
     return (
-      <AvatarWithImageLink href={`/apps/feepayments/view/${row.id}`}>
+      <AvatarWithImageLink href={`/apps/fees/view/${row.id}`}>
         {/* <CustomAvatar src={row.photo} sx={{ mr: 3, width: 34, height: 34 }} /> */}
       </AvatarWithImageLink>
     );
   } else {
     return (
-      <AvatarWithoutImageLink href={`/apps/feepayments/view/${row.id}`}>
+      <AvatarWithoutImageLink href={`/apps/fees/view/${row.id}`}>
         {/* <CustomAvatar
           skin='light'
           color={row.avatarColor || 'primary'}
@@ -190,10 +190,10 @@ const defaultColumns = [
   {
     flex: 0.2,
     minWidth: 230,
-    field: 'Regno',
-    regNo: 'Reg No',
+    field: 'amount',
+    amount: 'Amount',
     renderCell: ({ row }: CellType) => {
-      const { id, regno } = row;
+      const { id, amount } = row;
 
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -208,7 +208,7 @@ const defaultColumns = [
               textTransform: 'capitalize',
             }}
           >
-            {regno}
+            {amount}
           </Typography>
         </Box>
       );
@@ -217,32 +217,19 @@ const defaultColumns = [
   {
     flex: 0.2,
     minWidth: 250,
-    field: 'fullname',
+    field: 'student',
     headerName: 'Full Name',
     renderCell: ({ row }: CellType) => {
       return (
         <Typography noWrap variant="body2" sx={{ textTransform: 'capitalize' }}>
-          {row.fullname}
+          {row.student}
         </Typography>
       );
     },
   },
-  //   {
-  //     flex: 0.2,
-  //     minWidth: 250,
-  //     field: "classs",
-  //     headerName: "Class",
-  //     renderCell: ({ row }: CellType) => {
-  //       return (
-  //         <Typography noWrap variant='body2' sx={{ textTransform: 'capitalize' }}>
-  //           {row.classs}
-  //         </Typography>
-  //       )
-  //     }
-  //   },
   {
     flex: 0.15,
-    field: 'payment_date',
+    field: 'amount',
     minWidth: 150,
     headerName: 'Payment Date',
     renderCell: ({ row }: CellType) => {
@@ -252,7 +239,7 @@ const defaultColumns = [
             noWrap
             sx={{ color: 'text.secondary', textTransform: 'capitalize' }}
           >
-            {row.payment_date}
+            {row.amount}
           </Typography>
         </Box>
       );
@@ -311,7 +298,7 @@ const FeesList = () => {
   // ** Hooks
   const dispatch = useDispatch<AppDispatch>();
 
-  const store = useSelector((state: RootState) => state.feepayments);
+  const store = useSelector((state: RootState) => state.fees);
 
   // Whenever there is a change in the following states, fetchData
   useEffect(() => {
@@ -401,123 +388,14 @@ const FeesList = () => {
             <CardContent>
               <Grid container spacing={6}>
                 <Grid item sm={12} xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id="role-select">Select Role</InputLabel>
-                    <Select
-                      fullWidth
-                      value={role}
-                      id="select-role"
-                      label="Select Role"
-                      labelId="role-select"
-                      onChange={handleRoleChange}
-                      inputProps={{ placeholder: 'Select Role' }}
-                    >
-                      <MenuItem value="">Select Role</MenuItem>
-                      <MenuItem value="manager">Manager</MenuItem>
-                      <MenuItem value="teller">Teller</MenuItem>
-                    </Select>
-                  </FormControl>
+                  {/* {row.amount} */}
+                  hello world!!!
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12}>
-          <Card>
-            {/* <TableHeader value={value} handleFilter={handleFilter} /> */}
-            <DataGrid
-              rows={store.data}
-              columns={columns}
-              initialState={{}}
-              pageSizeOptions={[10, 50, 100]}
-            />
-          </Card>
-        </Grid>
       </Grid>
-
-      {/* Deactivate Account Dialogs */}
-      <Dialog fullWidth maxWidth="xs" open={open} onClose={handleCancelDialog}>
-        <DialogContent>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Box
-              sx={{
-                maxWidth: '85%',
-                textAlign: 'center',
-                '& svg': { mb: 4, color: 'warning.main' },
-              }}
-            >
-              <Icon icon="mdi:alert-circle-outline" fontSize="5.5rem" />
-              <Typography>
-                Are you sure you would like to delete this user?
-              </Typography>
-            </Box>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button variant="contained" onClick={handleConfirmation}>
-            Yes
-          </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={handleCancelDialog}
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        fullWidth
-        maxWidth="xs"
-        open={secondDialogOpen}
-        onClose={handleSecondDialogClose}
-      >
-        <DialogContent>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              '& svg': {
-                mb: 14,
-                color: userInput === 'yes' ? 'success.main' : 'error.main',
-              },
-            }}
-          >
-            <Icon
-              fontSize="5.5rem"
-              icon={
-                userInput === 'yes'
-                  ? 'mdi:check-circle-outline'
-                  : 'mdi:close-circle-outline'
-              }
-            />
-            <Typography variant="h4" sx={{ mb: 8 }}>
-              {userInput === 'yes' ? 'Deleted!' : 'Cancelled!'}
-            </Typography>
-            <Typography>
-              {userInput === 'yes'
-                ? 'User has been deleted.'
-                : 'User deletion cancelled!'}
-            </Typography>
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button
-            variant="contained"
-            color="success"
-            onClick={handleSecondDialogClose}
-          >
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 };

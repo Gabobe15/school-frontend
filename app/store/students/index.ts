@@ -126,49 +126,54 @@ export const getSingleStudent = createAsyncThunk(
 );
 
 export const appStudentsSlice = createSlice({
-  name: 'appStudents',
-  initialState: {
-    data: [],
-    total: 1,
-    status: '',
-    singleStudent: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchData.fulfilled, (state, action) => {
-        state.data = action.payload[0].students;
-        state.total = action.payload[0].total;
-      })
-      .addCase(getSingleStudent.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.singleStudent = action.payload[0].student;
-      })
-      .addCase(getSingleStudent.rejected, (state) => {
-        state.status = 'failed';
-        state.singleStudent = null;
-      })
-      .addCase(getSingleStudentByRegNo.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.singleStudent = action.payload[0].student;
-      })
-      .addCase(getSingleStudentByRegNo.rejected, (state) => {
-        state.status = 'failed';
-        state.singleStudent = null;
-      })
-      .addCase(deactivateReactivateStd.fulfilled, (state) => {
-        state.status = 'succeeded';
-      })
-      .addCase(deactivateReactivateStd.rejected, (state) => {
-        state.status = 'failed';
-      })
-      .addCase(updateStudent.fulfilled, (state) => {
-        state.status = 'succeeded';
-      })
-      .addCase(updateStudent.rejected, (state) => {
-        state.status = 'failed';
-      });
-  },
+	name: 'appStudents',
+	initialState: {
+		data: [],
+		total: 1,
+		status: '',
+		singleStudent: null,
+	},
+	reducers: {
+		emptySingleStudent: (state) => {
+			state.singleStudent = null;
+		},
+	},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchData.fulfilled, (state, action) => {
+				state.data = action.payload[0].students;
+				state.total = action.payload[0].total;
+			})
+			.addCase(getSingleStudent.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+				state.singleStudent = action.payload[0].student;
+			})
+			.addCase(getSingleStudent.rejected, (state) => {
+				state.status = 'failed';
+				state.singleStudent = null;
+			})
+			.addCase(getSingleStudentByRegNo.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+				state.singleStudent = action.payload[0].student;
+			})
+			.addCase(getSingleStudentByRegNo.rejected, (state) => {
+				state.status = 'failed';
+				state.singleStudent = null;
+			})
+			.addCase(deactivateReactivateStd.fulfilled, (state) => {
+				state.status = 'succeeded';
+			})
+			.addCase(deactivateReactivateStd.rejected, (state) => {
+				state.status = 'failed';
+			})
+			.addCase(updateStudent.fulfilled, (state) => {
+				state.status = 'succeeded';
+			})
+			.addCase(updateStudent.rejected, (state) => {
+				state.status = 'failed';
+			});
+	},
 });
 
+export const { emptySingleStudent } = appStudentsSlice.actions;
 export default appStudentsSlice.reducer;

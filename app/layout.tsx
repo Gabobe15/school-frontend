@@ -44,30 +44,33 @@ const Layout: React.FC<any> = ({ children, session }) => {
   );
 
   return (
-    <html>
-      {/* <CacheProvider value={emotionCache}> */}
-      <body>
-        <ColorModeContext.Provider value={colorMode}>
-          <ThemeProvider
-            theme={mode === 'dark' ? darkThemeChosen : lightThemeChosen}
-          >
-            <SessionProvider session={session}>
-              {/* <Sidebar/> */}
-              <Provider store={store}>
-                <CssBaseline/>
-              <Header ColorModeContext={ColorModeContext} />
-                <main className={scss.layout}>
-                  <SideMenu />
-                  {children}
-                </main>
-              </Provider>
-              {/* <Footer /> */}
-            </SessionProvider>
-          </ThemeProvider>
-        </ColorModeContext.Provider>
-      </body>
-    </html>
-  );
+		<html>
+			{/* <CacheProvider value={emotionCache}> */}
+			<body>
+				<ColorModeContext.Provider value={colorMode}>
+					<ThemeProvider
+						theme={mode === 'dark' ? darkThemeChosen : lightThemeChosen}
+					>
+						<SessionProvider session={session}>
+							{/* <Sidebar/> */}
+							<Provider store={store}>
+								<CssBaseline />
+								<Header ColorModeContext={ColorModeContext} />
+								<main className={scss.layout}>
+									<SideMenu />
+									{/* {children} */}
+									<section className={scss.contentWrapper}>
+										{children}
+									</section>
+								</main>
+							</Provider>
+							{/* <Footer /> */}
+						</SessionProvider>
+					</ThemeProvider>
+				</ColorModeContext.Provider>
+			</body>
+		</html>
+	);
 };
 
 export default Layout;

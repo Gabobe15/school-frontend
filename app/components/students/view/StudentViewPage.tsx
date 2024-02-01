@@ -33,7 +33,12 @@ const StudentView = ({ id }: any) => {
   }, [dispatch, id]);
 
   const store = useSelector((state: RootState) => state.students);
+  const fstore = useSelector((state: RootState) => state.fees);
   const data = store.singleStudent;
+  // const fdata = fstore.singleStudent;
+  console.log(fstore);
+  
+
 
   if (store.status === 'succeeded') {
     return (
@@ -42,7 +47,7 @@ const StudentView = ({ id }: any) => {
           <StudentViewLeft data={data} />
         </Grid>
         <Grid item xs={12} md={7} lg={8}>
-          <StudentViewRight data={data} />
+          <StudentViewRight id={id} />
         </Grid>
       </Grid>
     );

@@ -1,7 +1,7 @@
 'use client';
 
 // ** React Imports
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useState, useEffect } from 'react';
 
 // ** MUI Imports
 import Card from '@mui/material/Card';
@@ -46,6 +46,9 @@ import { useForm, Controller } from 'react-hook-form';
 
 import { useRouter, usePathname } from 'next/navigation';
 import Icon from '@/app/icon';
+
+import { RootState } from '@/app/store';
+import { useSelector } from 'react-redux';
 
 interface StudentData {
   regno: string;
@@ -101,6 +104,9 @@ const SearchStudent = () => {
     reset();
   };
 
+  const store = useSelector((state: RootState) => state.students);
+  const data = store.singleStudent;
+
   return (
     <div>
       <Card sx={{ ml: 9, m: 5 }}>
@@ -114,23 +120,25 @@ const SearchStudent = () => {
         />
         <CardContent>
           <Collapse in={open} sx={{ maxWidth: '600px', margin: 'auto', mb: 6 }}>
-            <Alert
-              action={
-                <IconButton
-                  aria-label="close"
-                  color={isError ? 'error' : 'success'}
-                  size="small"
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-                >
-                  <Icon icon="mdi:close" />
-                </IconButton>
-              }
-              severity={isError ? 'error' : 'success'}
-            >
-              {message}
-            </Alert>
+            {store.status === 'failed' ? (
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color={isError ? 'error' : 'success'}
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <Icon icon="mdi:close" />
+                  </IconButton>
+                }
+                severity={isError ? 'error' : 'success'}
+              >
+                {message}
+              </Alert>
+            ) : null}
           </Collapse>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={6}>
